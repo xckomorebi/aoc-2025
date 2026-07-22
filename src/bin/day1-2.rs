@@ -8,7 +8,7 @@ fn count_num(val: i32, delta: i32) -> i32 {
         result += (delta / 100).abs();
         delta %= 100;
         if delta == 0 {
-            result;
+            return result;
         }
     }
 

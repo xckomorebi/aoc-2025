@@ -2,7 +2,7 @@
 
 if [ $# -lt 2 ]; then
     echo 'not enough args'
-    echo "usage: $0 {#day} {#Q}"
+    echo "usage: $0 {DAY} {PART}"
     exit 1
 fi
 
@@ -28,10 +28,7 @@ function ensure_input() {
 
 ensure_input $DAY
 
-mkdir -p output
+exe_name=day${DAY}-${PART}
 
-exe_name=${DAY}-${PART}
 
-rustc day${DAY}/$PART.rs -o output/$exe_name
-
-cat data/$DAY.txt | output/$exe_name
+cat data/$DAY.txt | cargo run --bin $exe_name
