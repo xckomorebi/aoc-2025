@@ -13,16 +13,34 @@ fn get_num_digit(id: i64) -> i8 {
 
 fn is_invalid_id(id: i64) -> bool {
     let len = get_num_digit(id);
-    if len % 2 != 0 {
-        return false;
+
+    for cand_len in 1..len {
+        if len % cand_len == 0 && check_candidate_len(id, cand_len) {
+            return true;
+        }
     }
 
+    false
+}
+
+fn check_candidate_len(id: i64, cand_len: i8) -> bool {
     let mut div = 1;
-    for _ in 0..(len / 2) {
+
+    for _ in 0..cand_len {
         div *= 10;
     }
 
-    id / div == id % div
+    let check_num = id % div;
+    let mut cur = id;
+
+    while cur > 0 {
+        if cur % div != check_num {
+            return false;
+        }
+        cur /= div;
+    }
+
+    true
 }
 
 fn main() {
@@ -38,7 +56,7 @@ fn main() {
         let start_id: i64 = pair[0].trim().parse().unwrap();
         let end_id: i64 = pair[1].trim().parse().unwrap();
 
-        for id in start_id .. (end_id + 1) {
+        for id in start_id..(end_id + 1) {
             if is_invalid_id(id) {
                 result += id;
             }
